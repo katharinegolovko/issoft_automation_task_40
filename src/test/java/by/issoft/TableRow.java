@@ -63,16 +63,6 @@ public class TableRow {
         this.position = position;
     }
 
-    public List<TableRow> ageCheck(List<TableRow> tableRows) {
-        List<TableRow> approvedRows = new ArrayList<>();
-        for (TableRow tableRow : tableRows) {
-            if (Integer.parseInt(tableRow.getAge()) > 35) {
-                approvedRows.add(tableRow);
-            }
-        }
-        return approvedRows;
-    }
-
     public List<TableRow> conditionCheck(List<TableRow> tableRows) {
         List<TableRow> approvedRows = new ArrayList<>();
         for (TableRow tableRow : tableRows) {
