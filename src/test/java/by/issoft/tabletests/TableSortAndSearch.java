@@ -13,8 +13,6 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class TableSortAndSearch {
 
     private WebDriver driver;
@@ -27,61 +25,29 @@ public class TableSortAndSearch {
 
     @Test
     public void userCanGetDataFromTable() {
-        driver.get("https://www.seleniumeasy.com/test/table-sort-search-demo.html");
+        driver.get("https://demo.seleniumeasy.com/table-sort-search-demo.html");
         WebElement selectElement = driver.findElement(By.name("example_length"));
         Select showEntriesDropDown = new Select(selectElement);
         showEntriesDropDown.selectByValue("10");
         WebElement simpleTable = driver.findElement(By.id("example"));
 
-        //Get all rows
-        List<WebElement> rows = simpleTable.findElements(By.tagName("tr"));
-        assertEquals(11, rows.size());
-
-        //Get values from each column
-        List<WebElement> colName = simpleTable.findElements(By.xpath("//tbody//td[1]"));
-        List<WebElement> colPosition = simpleTable.findElements(By.xpath("//tbody//td[2]"));
-        List<WebElement> colOffice = simpleTable.findElements(By.xpath("//tbody//td[3]"));
-        List<WebElement> colAge = simpleTable.findElements(By.xpath("//tbody//td[4]"));
-        List<WebElement> colStartDate = simpleTable.findElements(By.xpath("//tbody//td[5]"));
-        List<WebElement> colSalary = simpleTable.findElements(By.xpath("//tbody//td[6]"));
-
-        //Create tableRow objects
-        TableRow tableRow1 = new TableRow();
-        TableRow tableRow2 = new TableRow();
-        TableRow tableRow3 = new TableRow();
-        TableRow tableRow4 = new TableRow();
-        TableRow tableRow5 = new TableRow();
-        TableRow tableRow6 = new TableRow();
-        TableRow tableRow7 = new TableRow();
-        TableRow tableRow8 = new TableRow();
-        TableRow tableRow9 = new TableRow();
-        TableRow tableRow10 = new TableRow();
-
         List<TableRow> tableRows = new ArrayList<>();
-        tableRows.add(tableRow1);
-        tableRows.add(tableRow2);
-        tableRows.add(tableRow3);
-        tableRows.add(tableRow4);
-        tableRows.add(tableRow5);
-        tableRows.add(tableRow6);
-        tableRows.add(tableRow7);
-        tableRows.add(tableRow8);
-        tableRows.add(tableRow9);
-        tableRows.add(tableRow10);
+        TableRow table = new TableRow();
 
-        //Fill out objects with table data
-        for (int i = 0; i < tableRows.size(); i++) {
-            tableRows.get(i).setName(colName.get(i).getText());
-            tableRows.get(i).setPosition(colPosition.get(i).getText());
-            tableRows.get(i).setOffice(colOffice.get(i).getText());
-            tableRows.get(i).setAge(colAge.get(i).getText());
-            tableRows.get(i).setStartDate(colStartDate.get(i).getText());
-            tableRows.get(i).setSalary(colSalary.get(i).getText());
+        for (int i = 1; i < 11; i++) {
+            String colName = simpleTable.findElement(By.xpath("//tr[" + i + "]//td[1]")).getText();
+            String colPosition = simpleTable.findElement(By.xpath("//tr[" + i + "]//td[2]")).getText();
+            String colOffice = simpleTable.findElement(By.xpath("//tr[" + i + "]//td[3]")).getText();
+            String colAge = simpleTable.findElement(By.xpath("//tr[" + i + "]//td[4]")).getText();
+            String colSalary = simpleTable.findElement(By.xpath("//tr[" + i + "]//td[6]")).getText();
+            tableRows.add(new TableRow(colName, colPosition, colOffice, colAge, colSalary));
         }
 
-
-        for (WebElement col : colName) {
-            System.out.print(col.getText() + "\t");
+        List<TableRow> newRows = table.conditionCheck(tableRows);
+        for (TableRow newRow : newRows) {
+            System.out.println(newRow.getName());
+            System.out.println(newRow.getAge());
+            System.out.println(newRow.getSalary());
         }
     }
 

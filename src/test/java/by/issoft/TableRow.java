@@ -1,13 +1,27 @@
 package by.issoft;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TableRow {
 
     private String name;
     private String position;
     private String office;
     private String age;
-    private String startDate;
     private String salary;
+
+    public TableRow() {
+
+    }
+
+    public TableRow(String name, String position, String office, String age, String salary) {
+        this.name = name;
+        this.position = position;
+        this.office = office;
+        this.age = age;
+        this.salary = salary;
+    }
 
     public String getOffice() {
         return office;
@@ -23,14 +37,6 @@ public class TableRow {
 
     public void setSalary(String salary) {
         this.salary = salary;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
     }
 
     public String getAge() {
@@ -55,5 +61,32 @@ public class TableRow {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public List<TableRow> ageCheck(List<TableRow> tableRows) {
+        List<TableRow> approvedRows = new ArrayList<>();
+        for (TableRow tableRow : tableRows) {
+            if (Integer.parseInt(tableRow.getAge()) > 35) {
+                approvedRows.add(tableRow);
+            }
+        }
+        return approvedRows;
+    }
+
+    public List<TableRow> conditionCheck(List<TableRow> tableRows) {
+        List<TableRow> approvedRows = new ArrayList<>();
+        for (TableRow tableRow : tableRows) {
+            int salary = tableRow.parseStringToInt(tableRow.getSalary().substring(1));
+            if (Integer.parseInt(tableRow.getAge()) > 35 && salary > 100000) {
+                approvedRows.add(tableRow);
+            }
+        }
+        return approvedRows;
+    }
+
+    public int parseStringToInt(String s) {
+        s = s.replaceAll(",", "");
+        s = s.replaceAll("/y", "");
+        return Integer.parseInt(s);
     }
 }
