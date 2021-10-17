@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-public class MultiSelectList {
+public class MultiSelectListTest {
     private WebDriver driver;
 
     @BeforeEach

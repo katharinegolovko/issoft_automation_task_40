@@ -20,10 +20,12 @@ public class ProgressBarTest {
 
     @Test
     public void refreshPageAfter50Percents() {
-        driver.get("https://www.seleniumeasy.com/test/bootstrap-download-progress-demo.html");
+        driver.get("https://demo.seleniumeasy.com/bootstrap-download-progress-demo.html");
         driver.findElement(By.id("cricle-btn")).click();
         WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='percenttext' and contains(text(), '5')]")));
+        String[] secondDigitOfPercentage = {"1", "2", "3"};
+        String xPath = String.format("//*[@class='percenttext' and contains(text(), '5%s')]", secondDigitOfPercentage);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPath)));
         driver.navigate().refresh();
     }
 

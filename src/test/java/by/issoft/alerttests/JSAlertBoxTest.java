@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class JSConfirmBox {
+public class JSAlertBoxTest {
 
     private WebDriver driver;
 
@@ -21,17 +21,11 @@ public class JSConfirmBox {
     @Test
     public void userCanClickOkButton() {
         driver.get("https://www.seleniumeasy.com/test/javascript-alert-box-demo.html");
-        driver.findElement(By.xpath("//*[@class='btn btn-default btn-lg' and contains(text(), 'Click me!')]")).click();
+        driver.findElement(By.xpath("//*[@class='btn btn-default' and contains(text(), 'Click me!')]")).click();
+        String alertText = driver.switchTo().alert().getText();
         driver.switchTo().alert().accept();
-        Assertions.assertTrue(driver.findElement(By.xpath("//p[contains(text(), 'You pressed OK!')]")).isDisplayed());
-    }
-
-    @Test
-    public void userCanClickCancelButton() {
-        driver.get("https://www.seleniumeasy.com/test/javascript-alert-box-demo.html");
-        driver.findElement(By.xpath("//*[@class='btn btn-default btn-lg' and contains(text(), 'Click me!')]")).click();
-        driver.switchTo().alert().dismiss();
-        Assertions.assertTrue(driver.findElement(By.xpath("//p[contains(text(), 'You pressed Cancel!')]")).isDisplayed());
+        String expectedText = "I am an alert box!";
+        Assertions.assertEquals(expectedText, alertText);
     }
 
     @AfterEach
